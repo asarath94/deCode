@@ -8,16 +8,20 @@ import ResponsePanel from "./components/ResponsePanel";
 
 function App() {
   const [fileTree, setFileTree] = useState([]);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [aiResponse, setAiResponse] = useState("");
+
   return (
     <div className="app-container">
       <RepoInput setFileTree={setFileTree} />
 
       <div className="main-layout">
-        <FileTree tree={fileTree} />
-        <CodeViewer />
+        <FileTree tree={fileTree} setSelectedFiles={setSelectedFiles} />
+        <CodeViewer selectedFiles={selectedFiles} />
         <div className="ai-panel">
-          <QueryBox />
-          <ResponsePanel />
+          <QueryBox selectedFiles={selectedFiles} setAiResponse={setAiResponse} />
+          <ResponsePanel response={aiResponse} />
         </div>
       </div>
     </div>

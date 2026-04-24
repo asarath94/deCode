@@ -1,8 +1,10 @@
-function ResponsePanel() {
+function ResponsePanel({ response }) {
   return (
-    <div style={{ padding: "10px", flex: 1 }}>
+    <div style={{ padding: "10px", flex: 1, overflowY: "auto" }}>
       <h4>AI Response</h4>
-      <p>Your response will appear here...</p>
+      <div style={{ whiteSpace: "pre-wrap" }}>
+        {response || "Your response will appear here..."}
+      </div>
     </div>
   );
 }

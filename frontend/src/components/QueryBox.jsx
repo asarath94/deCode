@@ -1,17 +1,38 @@
 import { useState } from "react";
 
-function QueryBox() {
+function QueryBox({ selectedFiles, setAiResponse }) {
   const [query, setQuery] = useState("");
 
+  const handleAsk = async () => {
+    const combinedContent = selectedFiles
+      .map((file) => `File: ${file.name}\n${file.content.slice(0, 2000)}`)
+      .join("\n\n");
+
+    const res = await fetch("http://localhost:5000/ask-ai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: combinedContent,
+        question: query,
+      }),
+    });
+
+    const data = await res.json();
+    setAiResponse(data.answer);
+  };
+
   return (
-    <div style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+    <div style={{ padding: "10px" }}>
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Ask about the code..."
+        placeholder="Ask about selected files..."
         style={{ width: "100%", padding: "8px" }}
       />
-      <button style={{ marginTop: "10px", padding: "8px" }}>
+
+      <button onClick={handleAsk} style={{ marginTop: "10px" }}>
         Ask AI
       </button>
     </div>

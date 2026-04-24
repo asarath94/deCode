@@ -14,6 +14,9 @@ app.use(express.json());
 // ✅ INIT GIT
 const git = simpleGit();
 
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI("AIzaSyAaEpjub32pZpkUv5B_SX90GUJ7mcuOqgw");
 
 // ✅ HELPER FUNCTION
 function getFileTree(dir) {
@@ -34,10 +37,9 @@ function getFileTree(dir) {
     });
 }
 
-
 // ✅ ROUTE (AFTER app is defined)
 app.post("/load-repo", async (req, res) => {
-    console.log("Request received:", req.body);
+  console.log("Request received:", req.body);
   const { repoUrl } = req.body;
   const repoPath = path.join(__dirname, "repos", "project");
 
@@ -57,6 +59,51 @@ app.post("/load-repo", async (req, res) => {
   }
 });
 
+app.post("/get-file", (req, res) => {
+  const { filePath } = req.body;
+
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
+    res.json({ content });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to read file" });
+  }
+});
+
+app.post("/ask-ai", async (req, res) => {
+  const { content, question } = req.body;
+
+  try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash", // fast + free tier friendly
+    });
+
+    const prompt = `
+You are a senior software engineer.
+
+Analyze the following files:
+
+${content}
+
+Question:
+${question}
+
+Answer in:
+1. Summary
+2. Key functionality
+3. How files interact
+`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+
+    res.json({ answer: response.text() });
+  } catch (err) {
+    console.error("Gemini Error:", err);
+    res.status(500).json({ error: "AI request failed" });
+  }
+});
 
 // ✅ START SERVER LAST
 app.listen(5000, () => {
