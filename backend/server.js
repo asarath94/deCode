@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const simpleGit = require("simple-git");
@@ -16,7 +17,7 @@ const git = simpleGit();
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyAaEpjub32pZpkUv5B_SX90GUJ7mcuOqgw");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // ✅ HELPER FUNCTION
 function getFileTree(dir) {

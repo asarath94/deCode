@@ -4,6 +4,13 @@ function QueryBox({ selectedFiles, setAiResponse }) {
   const [query, setQuery] = useState("");
 
   const handleAsk = async () => {
+    if (selectedFiles.length === 0) {
+      setAiResponse(
+        "Please select files from the tree first to provide context.",
+      );
+      return;
+    }
+
     const combinedContent = selectedFiles
       .map((file) => `File: ${file.name}\n${file.content.slice(0, 2000)}`)
       .join("\n\n");
@@ -28,8 +35,8 @@ function QueryBox({ selectedFiles, setAiResponse }) {
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Ask about selected files..."
-        style={{ width: "100%", padding: "8px" }}
+        placeholder="  Ask about selected files..."
+        style={{ width: "100%", padding: "5px 0px 5px 0px" }}
       />
 
       <button onClick={handleAsk} style={{ marginTop: "10px" }}>
