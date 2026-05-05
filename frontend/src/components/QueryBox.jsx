@@ -36,7 +36,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="  Ask about selected files..."
-        style={{ width: "100%", padding: "5px 0px 5px 0px" }}
+        style={{ width: "95%", padding: "5px 0px 5px 0px" }}
       />
 
       <button onClick={handleAsk} style={{ marginTop: "10px" }}>

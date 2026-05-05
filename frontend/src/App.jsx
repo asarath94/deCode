@@ -11,17 +11,21 @@ function App() {
   // const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [aiResponse, setAiResponse] = useState("");
+  const [analysis, setAnalysis] = useState("");
 
   return (
     <div className="app-container">
-      <RepoInput setFileTree={setFileTree} />
+      <RepoInput setFileTree={setFileTree} setAnalysis={setAnalysis} />
 
       <div className="main-layout">
         <FileTree tree={fileTree} setSelectedFiles={setSelectedFiles} />
         <CodeViewer selectedFiles={selectedFiles} />
         <div className="ai-panel">
-          <QueryBox selectedFiles={selectedFiles} setAiResponse={setAiResponse} />
-          <ResponsePanel response={aiResponse} />
+          <QueryBox
+            selectedFiles={selectedFiles}
+            setAiResponse={setAiResponse}
+          />
+          <ResponsePanel analysis={analysis} response={aiResponse} />
         </div>
       </div>
     </div>

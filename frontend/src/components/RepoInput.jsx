@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function RepoInput({ setFileTree }) {
+function RepoInput({ setFileTree, setAnalysis }) {
   const [url, setUrl] = useState("");
 
   const handleLoad = async () => {
@@ -16,17 +16,25 @@ function RepoInput({ setFileTree }) {
     setFileTree(data.tree);
   };
 
+  const handleAnalyze = async () => {
+    const res = await fetch("http://localhost:5000/analyze-repo", {
+      method: "POST",
+    });
+
+    const data = await res.json();
+    setAnalysis(data.analysis);
+  };
+
   return (
-    <div style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+    <div style={{ padding: "10px" }}>
       <input
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         placeholder="Enter GitHub repo URL..."
-        style={{ width: "70%", padding: "8px" }}
       />
-      <button onClick={handleLoad} style={{ marginLeft: "10px", padding: "8px" }}>
-        Load Repo
-      </button>
+
+      <button onClick={handleLoad}>Load Repo</button>
+      <button onClick={handleAnalyze}>Analyze Repo</button>
     </div>
   );
 }
