@@ -108,7 +108,9 @@ app.post("/load-repo", async (req, res) => {
     res.json({ tree });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to process repo" });
+    res.status(500).json({
+      error: "Invalid repository URL or repository does not exist",
+    });
   }
 });
 

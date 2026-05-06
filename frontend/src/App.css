@@ -23,4 +23,14 @@
   width: 30%;
   display: flex;
   flex-direction: column;
+  background-color: #fafafa;
+}
+
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+input {
+  padding: 8px;
 }
