@@ -150,6 +150,7 @@ Answer in:
 1. Summary
 2. Key functionality
 3. How files interact
+4. Format your response using Markdown with headings, bullet points, and code blocks where appropriate.
 `;
 
     const result = await model.generateContent(prompt);
@@ -197,6 +198,7 @@ Explain clearly:
 3. Tech stack
 4. High-level architecture
 Keep the explanation concise and avoid unnecessary assumptions.
+Format your response using Markdown with headings, bullet points, and code blocks where appropriate.
 `;
 
     const model = genAI.getGenerativeModel({

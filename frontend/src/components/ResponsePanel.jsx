@@ -1,3 +1,6 @@
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
 function ResponsePanel({ analysis, response, loading }) {
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
@@ -31,14 +34,30 @@ function ResponsePanel({ analysis, response, loading }) {
             <button onClick={() => handleCopy(analysis)}>Copy</button>
           </div>
 
-          <div
-            style={{
-              whiteSpace: "pre-wrap",
-              lineHeight: "1.6",
-              marginTop: "8px",
-            }}
-          >
-            {analysis}
+          <div style={{ marginTop: "8px" }}>
+            <ReactMarkdown
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={tomorrow}
+                      language={match[1]}
+                      PreTag="div"
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code style={{ background: "#eee", padding: "2px 4px" }}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            >
+              {analysis}
+            </ReactMarkdown>
           </div>
         </div>
       )}
@@ -57,14 +76,30 @@ function ResponsePanel({ analysis, response, loading }) {
             <button onClick={() => handleCopy(response)}>Copy</button>
           </div>
 
-          <div
-            style={{
-              whiteSpace: "pre-wrap",
-              lineHeight: "1.6",
-              marginTop: "8px",
-            }}
-          >
-            {response}
+          <div style={{ marginTop: "8px" }}>
+            <ReactMarkdown
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={tomorrow}
+                      language={match[1]}
+                      PreTag="div"
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code style={{ background: "#eee", padding: "2px 4px" }}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+            >
+              {response}
+            </ReactMarkdown>
           </div>
         </div>
       )}
