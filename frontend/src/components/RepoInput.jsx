@@ -41,7 +41,15 @@ function RepoInput({ setFileTree, setAnalysis, setLoading, loading }) {
   };
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div
+      style={{
+        padding: "10px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+      }}
+    >
       <input
         value={url}
         onChange={(e) => {

@@ -12,7 +12,7 @@ function ResponsePanel({ analysis, response, loading }) {
         padding: "15px",
         flex: 1,
         overflowY: "auto",
-        background: "#fafafa",
+        background: "#16171d",
       }}
     >
       <h3 style={{ marginBottom: "10px" }}>AI Output</h3>
