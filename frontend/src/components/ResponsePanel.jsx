@@ -15,7 +15,7 @@ function ResponsePanel({ analysis, response, loading }) {
         background: "#16171d",
       }}
     >
-      <h3 style={{ marginBottom: "10px" }}>AI Output</h3>
+      <h4 style={{ marginBottom: "10px", marginTop: "10px" }}>AI Output</h4>
 
       {/* 🔄 Loading State */}
       {loading && <p style={{ color: "#777" }}>⏳ Analyzing repository...</p>}
@@ -49,7 +49,9 @@ function ResponsePanel({ analysis, response, loading }) {
                       {String(children).replace(/\n$/, "")}
                     </SyntaxHighlighter>
                   ) : (
-                    <code style={{ background: "#eee", padding: "2px 4px" }}>
+                    <code
+                      style={{ background: "#8b8989ff", padding: "2px 4px" }}
+                    >
                       {children}
                     </code>
                   );
@@ -91,7 +93,9 @@ function ResponsePanel({ analysis, response, loading }) {
                       {String(children).replace(/\n$/, "")}
                     </SyntaxHighlighter>
                   ) : (
-                    <code style={{ background: "#eee", padding: "2px 4px" }}>
+                    <code
+                      style={{ background: "#8b8989ff", padding: "2px 4px" }}
+                    >
                       {children}
                     </code>
                   );

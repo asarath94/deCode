@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IoSend } from "react-icons/io5";
 
 function QueryBox({ selectedFiles, setAiResponse }) {
   const [query, setQuery] = useState("");
@@ -31,16 +32,49 @@ function QueryBox({ selectedFiles, setAiResponse }) {
   };
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div
+      style={{
+        padding: "12px",
+        background: "#2b2b2b",
+        borderRadius: "20px",
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        width: "96%",
+        boxSizing: "border-box",
+        margin: "10px",
+      }}
+    >
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="  Ask about selected files..."
-        style={{ width: "95%", padding: "5px 0px 5px 0px" }}
+        placeholder="Ask about selected files..."
+        style={{
+          flex: 1,
+          background: "transparent",
+          border: "none",
+          outline: "none",
+          color: "white",
+          fontSize: "15px",
+        }}
       />
 
-      <button onClick={handleAsk} style={{ marginTop: "10px" }}>
-        Ask AI
+      <button
+        onClick={handleAsk}
+        style={{
+          background: "#444",
+          border: "none",
+          borderRadius: "50%",
+          width: "38px",
+          height: "38px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          color: "white",
+        }}
+      >
+        <IoSend size={18} />
       </button>
     </div>
   );
