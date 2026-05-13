@@ -1,3 +1,4 @@
+import { darkTheme, lightTheme } from "./themes";
 import { useState } from "react";
 import "./App.css";
 import RepoInput from "./components/RepoInput";
@@ -17,27 +18,52 @@ function App() {
 
   // ✅ Track ALL selected files
   const [selectedFilePaths, setSelectedFilePaths] = useState([]);
-
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const theme = isDarkMode ? darkTheme : lightTheme;
   return (
-    <div className="app-container">
+    <div className="app-container" style={{ background: theme.sidebar }}>
       <RepoInput
         setFileTree={setFileTree}
         setAnalysis={setAnalysis}
         setLoading={setLoading}
         loading={loading}
+        theme={theme}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={setIsDarkMode}
       />
+      {/* <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "10px",
+          background: theme.panel,
+          borderBottom: `1px solid ${theme.border}`,
+        }}
+      >
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          style={{
+            padding: "8px 12px",
+            cursor: "pointer",
+            borderRadius: "6px",
+          }}
+        >
+          {isDarkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
+        </button>
+      </div> */}
 
       <div className="main-layout">
-        <div className="sidebar">
+        <div className="sidebar" style={{ borderColor: theme.border, background: theme.sidebar }}>
           <FileTree
             tree={fileTree}
             setSelectedFiles={setSelectedFiles}
             setActiveTab={setActiveTab}
             selectedFilePaths={selectedFilePaths}
             setSelectedFilePaths={setSelectedFilePaths}
+            theme={theme}
           />
         </div>
-        <div className="editor-panel">
+        <div className="editor-panel" style={{ borderColor: theme.border, background: theme.background }}>
           <CodeViewer
             selectedFiles={selectedFiles}
             activeTab={activeTab}
@@ -45,17 +71,22 @@ function App() {
             setSelectedFiles={setSelectedFiles}
             selectedFilePaths={selectedFilePaths}
             setSelectedFilePaths={setSelectedFilePaths}
+            theme={theme}
+            isDarkMode={isDarkMode}
           />
         </div>
-        <div className="ai-panel">
+        <div className="ai-panel" style={{ borderColor: theme.border, background: theme.sidebar }}>
           <ResponsePanel
             analysis={analysis}
             response={aiResponse}
             loading={loading}
+            theme={theme}
+            isDarkMode={isDarkMode}
           />
           <QueryBox
             selectedFiles={selectedFiles}
             setAiResponse={setAiResponse}
+            theme={theme}
           />
         </div>
       </div>

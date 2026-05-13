@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoSend } from "react-icons/io5";
 
-function QueryBox({ selectedFiles, setAiResponse }) {
+function QueryBox({ selectedFiles, setAiResponse, theme }) {
   const [query, setQuery] = useState("");
 
   const handleAsk = async () => {
@@ -35,7 +35,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
     <div
       style={{
         padding: "12px",
-        background: "#2b2b2b",
+        background: theme.panel,
         borderRadius: "20px",
         display: "flex",
         alignItems: "center",
@@ -43,6 +43,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
         width: "96%",
         boxSizing: "border-box",
         margin: "10px",
+        border: `1px solid ${theme.border}`,
       }}
     >
       <input
@@ -54,7 +55,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
           background: "transparent",
           border: "none",
           outline: "none",
-          color: "white",
+          color: theme.text,
           fontSize: "15px",
         }}
       />
@@ -62,7 +63,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
       <button
         onClick={handleAsk}
         style={{
-          background: "#444",
+          background: "#f5b942",
           border: "none",
           borderRadius: "50%",
           width: "38px",
@@ -71,7 +72,7 @@ function QueryBox({ selectedFiles, setAiResponse }) {
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
-          color: "white",
+          color: "black",
         }}
       >
         <IoSend size={18} />

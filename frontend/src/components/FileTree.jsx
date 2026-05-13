@@ -7,6 +7,7 @@ import {
   FaCss3Alt,
   FaMarkdown,
   FaFileAlt,
+  FaSearch,
 } from "react-icons/fa";
 
 import { VscJson, VscChevronRight, VscChevronDown } from "react-icons/vsc";
@@ -17,9 +18,12 @@ function FileTree({
   setActiveTab,
   selectedFilePaths,
   setSelectedFilePaths,
+  theme,
 }) {
   // ✅ Track expanded folders
   const [expandedFolders, setExpandedFolders] = useState({});
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   // ================== FILE CLICK ==================
   const handleClick = async (node) => {
@@ -78,6 +82,34 @@ function FileTree({
     }
   };
 
+  const filterTree = (nodes, search) => {
+    return nodes
+      .map((node) => {
+        // 📁 Folder
+        if (node.isDirectory) {
+          const filteredChildren = filterTree(node.children, search);
+
+          // show folder if children match
+          if (filteredChildren.length > 0) {
+            return {
+              ...node,
+              children: filteredChildren,
+            };
+          }
+
+          return null;
+        }
+
+        // 📄 File match
+        if (node.name.toLowerCase().includes(search.toLowerCase())) {
+          return node;
+        }
+
+        return null;
+      })
+      .filter(Boolean);
+  };
+
   // ================== TREE RENDER ==================
   const renderTree = (nodes, level = 0) => {
     return nodes.map((node, index) => {
@@ -90,7 +122,7 @@ function FileTree({
             onClick={() => handleClick(node)}
             onMouseEnter={(e) => {
               if (!isSelected) {
-                e.currentTarget.style.background = "#2a2d2e";
+                e.currentTarget.style.background = theme.hover;
               }
             }}
             onMouseLeave={(e) => {
@@ -111,7 +143,7 @@ function FileTree({
               // ✅ Multi-select highlight
               background: isSelected ? "#f5b942" : "transparent",
 
-              color: isSelected ? "#1a1a1a" : "#e4e4e4",
+              color: isSelected ? "#1a1a1a" : theme.text,
 
               transition: "all 0.15s ease",
               userSelect: "text",
@@ -175,28 +207,59 @@ function FileTree({
     return <FaFileAlt color={iconColor || "#9cdcfe"} />;
   };
 
+  const displayedTree = searchTerm ? filterTree(tree, searchTerm) : tree;
+
   return (
     <div
       style={{
         padding: "10px",
         overflowY: "auto",
         height: "97.5%",
-        background: "#16171d",
-        color: "#e4e4e4",
+        background: theme.sidebar,
+        color: theme.text,
       }}
     >
       <h4
         style={{
           marginBottom: "10px",
           marginTop: "10px",
-          color: "#ffffff",
+          color: theme.text,
           fontWeight: "500",
         }}
       >
         Explorer
       </h4>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          justifyContent: "center",
+        }}
+      >
+        <input
+          type="text"
+          placeholder={
+            tree.length === 0 ? "Load a repo first..." : "Search files..."
+          }
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          disabled={tree.length === 0}
+          style={{
+            width: "100%",
+            marginBottom: "12px",
+            padding: "8px",
+            background: theme.input,
+            border: `1px solid ${theme.border}`,
+            color: theme.text,
+            borderRadius: "6px",
+            outline: "none",
+          }}
+        />
+        <FaSearch style={{ marginLeft: "4px", marginBottom: "12px" }} />
+      </div>
 
-      <div>{renderTree(tree)}</div>
+      <div>{renderTree(displayedTree)}</div>
     </div>
   );
 }

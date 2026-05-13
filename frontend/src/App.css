@@ -1,7 +1,5 @@
 body {
   margin: 0;
-  background: #1e1e1e;
-  color: #e4e4e4;
   font-family: Arial, sans-serif;
 }
 
@@ -14,7 +12,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #16171d;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* TOP SECTION */
@@ -27,37 +25,39 @@ body {
 /* PANELS */
 .sidebar {
   width: 20%;
-  border-right: 1px solid #333;
-  border-top: 1px solid #333;
-  background: #16171d;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  transition: background 0.3s ease;
 }
 
 .editor-panel {
   width: 50%;
-  border-right: 1px solid #333;
-  background: #1e1e1e;
+  border-right: 1px solid;
+  transition: background 0.3s ease;
 }
 
 .ai-panel {
   width: 30%;
-  border-top: 1px solid #333;
-  background: #16171d;
+  border-top: 1px solid;
   display: flex;
   flex-direction: column;
+  transition: background 0.3s ease;
 }
 
 /* BUTTONS */
 button {
-  background: #2d2d2d;
-  color: #ddd;
+  background: #f5b942;
+  color: #000000;
   border: 1px solid #444;
   padding: 8px 12px;
   cursor: pointer;
   transition: 0.15s ease;
+  font-weight: 600;
+  border-radius: 5px;
 }
 
 button:hover {
-  background: #3a3d41;
+  background: #d49b1f;
 }
 
 button:disabled {

@@ -1,5 +1,8 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {
+  vscDarkPlus,
+  prism,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function CodeViewer({
   selectedFiles,
@@ -8,6 +11,8 @@ function CodeViewer({
   setSelectedFiles,
   selectedFilePaths,
   setSelectedFilePaths,
+  theme,
+  isDarkMode,
 }) {
   // ✅ Find active file
   const activeFile =
@@ -50,16 +55,16 @@ function CodeViewer({
         height: "99.9%",
         display: "flex",
         flexDirection: "column",
-        background: "#16171d",
-        color: "#e4e4e4",
+        background: theme.sidebar,
+        color: theme.text,
       }}
     >
       {/* ✅ TABS */}
       <div
         style={{
           display: "flex",
-          background: "#252526",
-          borderBottom: "1px solid #333",
+          background: theme.panel,
+          borderBottom: `1px solid ${theme.border}`,
           overflowX: "auto",
         }}
       >
@@ -76,8 +81,9 @@ function CodeViewer({
                 alignItems: "center",
                 gap: "10px",
                 cursor: "pointer",
-                background: isActive ? "#1e1e1e" : "#2d2d2d",
-                borderRight: "1px solid #333",
+                background: isActive ? theme.activeTab : theme.inactiveTab,
+
+                borderRight: `1px solid ${theme.border}`,
                 minWidth: "fit-content",
               }}
             >
@@ -89,7 +95,8 @@ function CodeViewer({
                   handleClose(file.name);
                 }}
                 style={{
-                  color: "#999",
+                  color: theme.text,
+                  opacity: 0.7,
                   fontSize: "12px",
                   cursor: "pointer",
                 }}
@@ -117,19 +124,22 @@ function CodeViewer({
 
             <SyntaxHighlighter
               language={getLanguage(activeFile.name)}
-              style={vscDarkPlus}
+              style={isDarkMode ? vscDarkPlus : prism}
               showLineNumbers={true}
+              lineNumberStyle={{
+                color: isDarkMode ? "#858585" : "#999",
+              }}
               wrapLines={true}
               customStyle={{
                 margin: 0,
                 padding: "16px",
                 fontSize: "14px",
                 lineHeight: "1.5",
-                background: "#1e1e1e",
+                background: theme.background,
                 borderRadius: "6px",
               }}
               PreTag="div"
-              children={formattedCode}
+              children={formattedCode.slice(0, 600)}
             />
           </>
         )}

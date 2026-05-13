@@ -1,7 +1,12 @@
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
-function ResponsePanel({ analysis, response, loading }) {
+import {
+  vscDarkPlus,
+  prism,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
+
+function ResponsePanel({ analysis, response, loading, theme, isDarkMode }) {
+  const codeTheme = isDarkMode ? vscDarkPlus : prism;
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
   };
@@ -12,7 +17,8 @@ function ResponsePanel({ analysis, response, loading }) {
         padding: "15px",
         flex: 1,
         overflowY: "auto",
-        background: "#16171d",
+        background: theme.sidebar,
+        color: theme.text,
       }}
     >
       <h4 style={{ marginBottom: "10px", marginTop: "10px" }}>AI Output</h4>
@@ -42,7 +48,7 @@ function ResponsePanel({ analysis, response, loading }) {
 
                   return !inline && match ? (
                     <SyntaxHighlighter
-                      style={tomorrow}
+                      style={codeTheme}
                       language={match[1]}
                       PreTag="div"
                     >
@@ -86,7 +92,7 @@ function ResponsePanel({ analysis, response, loading }) {
 
                   return !inline && match ? (
                     <SyntaxHighlighter
-                      style={tomorrow}
+                      style={codeTheme}
                       language={match[1]}
                       PreTag="div"
                     >
