@@ -1,7 +1,12 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
+import { useEffect } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RepoInput({
+  initialUrl,
+  initialAction,
   setFileTree,
   setAnalysis,
   setLoading,
@@ -10,9 +15,62 @@ function RepoInput({
   setIsDarkMode,
   theme,
 }) {
+  const navigate = useNavigate();
   const [repoLoaded, setRepoLoaded] = useState(false);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(initialUrl || "");
+  useEffect(() => {
+    // prevent double execution
+    if (hasAutoLoaded.current) return;
 
+    hasAutoLoaded.current = true;
+
+    const autoLoadAndAnalyze = async () => {
+      if (!initialUrl) return;
+
+      try {
+        // LOAD REPO
+        const res = await fetch("http://localhost:5000/load-repo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ repoUrl: initialUrl }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to load repository");
+        }
+
+        setFileTree(data.tree);
+        setRepoLoaded(true);
+
+        // AUTO ANALYZE
+        if (initialAction === "analyze") {
+          setLoading(true);
+
+          const analysisRes = await fetch(
+            "http://localhost:5000/analyze-repo",
+            {
+              method: "POST",
+            },
+          );
+
+          const analysisData = await analysisRes.json();
+
+          setAnalysis(analysisData.analysis);
+
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error(err);
+        alert(err.message);
+      }
+    };
+
+    autoLoadAndAnalyze();
+  }, []);
   const handleLoad = async () => {
     try {
       const res = await fetch("http://localhost:5000/load-repo", {
@@ -49,6 +107,7 @@ function RepoInput({
     setLoading(false);
   };
 
+  const hasAutoLoaded = useRef(false);
   return (
     <div
       style={{
@@ -60,7 +119,18 @@ function RepoInput({
       }}
     >
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
-        <img src={logo} alt="Logo" style={{ height: "70px" }} />
+        <img
+          src={logo}
+          alt="Logo"
+          onClick={() => navigate("/")}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.03)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+          style={{ height: "70px", cursor: "pointer", transition: "0.2s" }}
+        />
       </div>
 
       <div
@@ -81,7 +151,7 @@ function RepoInput({
           style={{
             width: "300px",
             padding: "8px",
-            background: theme.input,
+            background: theme.panel,
             color: theme.text,
             border: `1px solid ${theme.border}`,
             borderRadius: "6px",
@@ -91,13 +161,14 @@ function RepoInput({
 
         <button
           onClick={handleLoad}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#d49b1f")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "#f5b942")}
+          disabled={loading}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#dd7600ff")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#F28F20")}
           style={{
             padding: "8px 12px",
-            background: "#f5b942",
-            color: "#1a1a1a",
-            border: "none",
+            background: "#F28F20",
+            color: theme.text,
+            border: `1px solid ${theme.border}`,
             borderRadius: "6px",
             cursor: "pointer",
             fontWeight: "600",
@@ -109,13 +180,13 @@ function RepoInput({
         <button
           onClick={handleAnalyze}
           disabled={loading}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#d49b1f")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "#f5b942")}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#dd7600ff")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#F28F20")}
           style={{
             padding: "8px 12px",
-            background: "#f5b942",
-            color: "#1a1a1a",
-            border: "none",
+            background: "#F28F20",
+            color: theme.text,
+            border: `1px solid ${theme.border}`,
             borderRadius: "6px",
             cursor: "pointer",
             fontWeight: "600",

@@ -63,7 +63,7 @@ function QueryBox({ selectedFiles, setAiResponse, theme }) {
       <button
         onClick={handleAsk}
         style={{
-          background: "#f5b942",
+          background: "#F28F20",
           border: "none",
           borderRadius: "50%",
           width: "38px",
@@ -72,7 +72,7 @@ function QueryBox({ selectedFiles, setAiResponse, theme }) {
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
-          color: "black",
+          color: theme.text,
         }}
       >
         <IoSend size={18} />

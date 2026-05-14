@@ -1,6 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -12,7 +14,9 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 /* TOP SECTION */
