@@ -6,7 +6,11 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://de-code-phi.vercel.app/"],
+  }),
+);
 app.use(express.json());
 
 const git = simpleGit();

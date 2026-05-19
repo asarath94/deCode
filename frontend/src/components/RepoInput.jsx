@@ -32,7 +32,7 @@ function RepoInput({
 
       try {
         // LOAD REPO
-        const res = await fetch("http://localhost:5000/load-repo", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/load-repo`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function RepoInput({
           setLoading(true);
 
           const analysisRes = await fetch(
-            "http://localhost:5000/analyze-repo",
+            `${import.meta.env.VITE_API_URL}/analyze-repo`,
             {
               method: "POST",
             },
@@ -76,7 +76,7 @@ function RepoInput({
   }, []);
   const handleLoad = async () => {
     try {
-      const res = await fetch("http://localhost:5000/load-repo", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/load-repo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,7 +100,7 @@ function RepoInput({
   const handleAnalyze = async () => {
     setLoading(true);
 
-    const res = await fetch("http://localhost:5000/analyze-repo", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/analyze-repo`, {
       method: "POST",
     });
 

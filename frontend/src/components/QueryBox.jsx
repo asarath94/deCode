@@ -16,7 +16,7 @@ function QueryBox({ selectedFiles, setAiResponse, theme, isMobile }) {
       .map((file) => `File: ${file.name}\n${file.content.slice(0, 2000)}`)
       .join("\n\n");
 
-    const res = await fetch("http://localhost:5000/ask-ai", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/ask-ai`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
