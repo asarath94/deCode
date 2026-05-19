@@ -3,7 +3,7 @@
 **deCode** is a powerful, IDE-style AI coding assistant that lets you instantly clone, explore, and analyze any public GitHub repository. Powered by Google Gemini AI, it provides a seamless developer workspace directly in your browser, allowing you to view syntax-highlighted code, interact with a smart AI chat to understand the codebase, and navigate file structures with ease.
 
 ### 🌟 Live Demo
-**[Try deCode out here!](https://de-code-phi.vercel.app/)**
+**<a href="https://de-code-phi.vercel.app/" target="_blank">Try deCode out here!</a>**
 
 ---
 
