@@ -13,6 +13,7 @@ function CodeViewer({
   setSelectedFilePaths,
   theme,
   isDarkMode,
+  isMobile,
 }) {
   // ✅ Find active file
   const activeFile =
@@ -66,6 +67,8 @@ function CodeViewer({
           background: theme.panel,
           borderBottom: `1px solid ${theme.border}`,
           overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none", // Hide scrollbar in Firefox
         }}
       >
         {selectedFiles.map((file) => {
@@ -129,14 +132,16 @@ function CodeViewer({
               lineNumberStyle={{
                 color: isDarkMode ? "#858585" : "#999",
               }}
-              wrapLines={true}
+              wrapLines={false}
               customStyle={{
                 margin: 0,
-                padding: "16px",
-                fontSize: "14px",
+                padding: isMobile ? "8px" : "16px",
+                fontSize: isMobile ? "12px" : "14px",
                 lineHeight: "1.5",
                 background: theme.background,
                 borderRadius: "6px",
+                overflowX: "auto",
+                WebkitOverflowScrolling: "touch",
               }}
               PreTag="div"
               children={formattedCode.slice(0, 600)}

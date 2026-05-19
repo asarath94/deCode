@@ -5,11 +5,13 @@ import Workspace from "./pages/Workspace";
 
 import { useState } from "react";
 import { darkTheme, lightTheme } from "./themes";
+import useResponsive from "./hooks/useResponsive";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
-
   const theme = isDarkMode ? darkTheme : lightTheme;
+
+  const { isMobile, isTablet, isDesktop } = useResponsive();
 
   return (
     <BrowserRouter>
@@ -21,6 +23,8 @@ function App() {
               theme={theme}
               isDarkMode={isDarkMode}
               setIsDarkMode={setIsDarkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
             />
           }
         />
@@ -32,6 +36,8 @@ function App() {
               theme={theme}
               isDarkMode={isDarkMode}
               setIsDarkMode={setIsDarkMode}
+              isMobile={isMobile}
+              isTablet={isTablet}
             />
           }
         />

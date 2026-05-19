@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoSend } from "react-icons/io5";
 
-function QueryBox({ selectedFiles, setAiResponse, theme }) {
+function QueryBox({ selectedFiles, setAiResponse, theme, isMobile }) {
   const [query, setQuery] = useState("");
 
   const handleAsk = async () => {
@@ -34,15 +34,15 @@ function QueryBox({ selectedFiles, setAiResponse, theme }) {
   return (
     <div
       style={{
-        padding: "12px",
+        padding: isMobile ? "12px 16px" : "12px",
         background: theme.panel,
-        borderRadius: "20px",
+        borderRadius: isMobile ? "24px" : "20px",
         display: "flex",
         alignItems: "center",
         gap: "10px",
-        width: "96%",
+        width: isMobile ? "calc(100% - 20px)" : "96%",
         boxSizing: "border-box",
-        margin: "10px",
+        margin: "10px auto",
         border: `1px solid ${theme.border}`,
       }}
     >
@@ -56,7 +56,7 @@ function QueryBox({ selectedFiles, setAiResponse, theme }) {
           border: "none",
           outline: "none",
           color: theme.text,
-          fontSize: "15px",
+          fontSize: isMobile ? "16px" : "15px",
         }}
       />
 
@@ -66,16 +66,17 @@ function QueryBox({ selectedFiles, setAiResponse, theme }) {
           background: "#F28F20",
           border: "none",
           borderRadius: "50%",
-          width: "38px",
-          height: "38px",
+          width: isMobile ? "44px" : "38px",
+          height: isMobile ? "44px" : "38px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
           color: theme.text,
+          flexShrink: 0,
         }}
       >
-        <IoSend size={18} />
+        <IoSend size={isMobile ? 20 : 18} />
       </button>
     </div>
   );

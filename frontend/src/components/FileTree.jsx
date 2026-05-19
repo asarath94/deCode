@@ -19,6 +19,7 @@ function FileTree({
   selectedFilePaths,
   setSelectedFilePaths,
   theme,
+  isMobile,
 }) {
   // ✅ Track expanded folders
   const [expandedFolders, setExpandedFolders] = useState({});
@@ -132,8 +133,8 @@ function FileTree({
             }}
             style={{
               cursor: "pointer",
-              padding: "6px 8px",
-              paddingLeft: `${level * 16 + 8}px`,
+              padding: isMobile ? "10px 12px" : "6px 8px",
+              paddingLeft: `${level * (isMobile ? 24 : 16) + (isMobile ? 12 : 8)}px`,
               display: "flex",
               alignItems: "center",
               gap: "8px",
@@ -169,7 +170,7 @@ function FileTree({
               )}
             </div>
 
-            <span style={{ fontSize: "14px" }}>{node.name}</span>
+            <span style={{ fontSize: isMobile ? "16px" : "14px" }}>{node.name}</span>
           </div>
 
           {/* ✅ Show children only if expanded */}
@@ -217,6 +218,7 @@ function FileTree({
         height: "97.5%",
         background: theme.sidebar,
         color: theme.text,
+        scrollBehavior: "smooth",
       }}
     >
       <h4
@@ -231,10 +233,16 @@ function FileTree({
       </h4>
       <div
         style={{
+          position: "sticky",
+          top: 0,
+          background: theme.sidebar,
+          zIndex: 10,
           display: "flex",
           alignItems: "center",
           gap: "8px",
           justifyContent: "center",
+          paddingTop: "10px",
+          paddingBottom: "10px",
         }}
       >
         <input

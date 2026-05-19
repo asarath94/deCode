@@ -14,10 +14,13 @@ function RepoInput({
   isDarkMode,
   setIsDarkMode,
   theme,
+  isMobile,
 }) {
   const navigate = useNavigate();
   const [repoLoaded, setRepoLoaded] = useState(false);
   const [url, setUrl] = useState(initialUrl || "");
+  const hasAutoLoaded = useRef(false);
+
   useEffect(() => {
     // prevent double execution
     if (hasAutoLoaded.current) return;
@@ -107,7 +110,56 @@ function RepoInput({
     setLoading(false);
   };
 
-  const hasAutoLoaded = useRef(false);
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          padding: "10px 16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: `1px solid ${theme.border}`,
+          background: theme.sidebar,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/")}
+        >
+          <img src={logo} alt="Logo" style={{ height: "32px" }} />
+          <span
+            style={{ fontWeight: "700", fontSize: "16px", color: theme.text }}
+          >
+            AI Codebase Assistant
+          </span>
+        </div>
+
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          style={{
+            padding: "6px 8px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            background: theme.input,
+            color: theme.text,
+            border: `1px solid ${theme.border}`,
+            fontSize: "14px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {isDarkMode ? "☀" : "🌙"}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -116,6 +168,8 @@ function RepoInput({
         gridTemplateColumns: "1fr auto 1fr",
         alignItems: "center",
         gap: "10px",
+        borderBottom: `1px solid ${theme.border}`,
+        background: theme.sidebar,
       }}
     >
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
@@ -129,7 +183,7 @@ function RepoInput({
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = "scale(1)";
           }}
-          style={{ height: "70px", cursor: "pointer", transition: "0.2s" }}
+          style={{ height: "70px", cursor: "pointer", transition: "0.2s", padding: "10px 0" }}
         />
       </div>
 

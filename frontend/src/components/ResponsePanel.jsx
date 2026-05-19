@@ -5,7 +5,7 @@ import {
   prism,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-function ResponsePanel({ analysis, response, loading, theme, isDarkMode }) {
+function ResponsePanel({ analysis, response, loading, theme, isDarkMode, isMobile }) {
   const codeTheme = isDarkMode ? vscDarkPlus : prism;
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
@@ -14,11 +14,14 @@ function ResponsePanel({ analysis, response, loading, theme, isDarkMode }) {
   return (
     <div
       style={{
-        padding: "15px",
+        padding: isMobile ? "20px 16px" : "15px",
         flex: 1,
         overflowY: "auto",
         background: theme.sidebar,
         color: theme.text,
+        scrollBehavior: "smooth",
+        lineHeight: isMobile ? "1.6" : "1.5",
+        fontSize: isMobile ? "15px" : "14px",
       }}
     >
       <h4 style={{ marginBottom: "10px", marginTop: "10px" }}>AI Output</h4>
@@ -40,7 +43,7 @@ function ResponsePanel({ analysis, response, loading, theme, isDarkMode }) {
             <button onClick={() => handleCopy(analysis)}>Copy</button>
           </div>
 
-          <div style={{ marginTop: "8px" }}>
+          <div style={{ marginTop: isMobile ? "12px" : "8px" }}>
             <ReactMarkdown
               components={{
                 code({ node, inline, className, children, ...props }) {
@@ -84,7 +87,7 @@ function ResponsePanel({ analysis, response, loading, theme, isDarkMode }) {
             <button onClick={() => handleCopy(response)}>Copy</button>
           </div>
 
-          <div style={{ marginTop: "8px" }}>
+          <div style={{ marginTop: isMobile ? "12px" : "8px" }}>
             <ReactMarkdown
               components={{
                 code({ node, inline, className, children, ...props }) {
