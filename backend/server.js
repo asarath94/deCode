@@ -8,7 +8,11 @@ const path = require("path");
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://de-code-phi.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://de-code-phi.vercel.app",
+      "https://de-code-m8528q3y8-saraths-projects-a1d83397.vercel.app",
+    ],
     methods: ["GET", "POST"],
     credentials: true,
   }),
