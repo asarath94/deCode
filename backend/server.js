@@ -9,6 +9,8 @@ const app = express();
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://de-code-phi.vercel.app/"],
+    methods: ["GET", "POST"],
+    credentials: true,
   }),
 );
 app.use(express.json());
